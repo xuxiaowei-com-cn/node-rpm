@@ -1,0 +1,17 @@
+stages:
+  - docker-build
+
+docker-build:
+  stage: docker-build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - VERSION=16.20.0
+    - docker build -t $DOCKER_USERNAME/node-rpm:$VERSION .
+    - docker images
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker push $DOCKER_USERNAME/node-rpm:$VERSION
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
+  rules:
+    - if: $CI_COMMIT_TAG
