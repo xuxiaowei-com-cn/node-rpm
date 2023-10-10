@@ -6,11 +6,12 @@ docker-build:
   image: docker:latest
   services:
     - docker:dind
+  before_script:
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   script:
-    - VERSION=18.16.0
+    - VERSION=18.16.1
     - docker build -t $DOCKER_USERNAME/node-rpm:$VERSION .
     - docker images
-    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
     - docker push $DOCKER_USERNAME/node-rpm:$VERSION
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   rules:
