@@ -11,7 +11,7 @@ docker-build:
   before_script:
     - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   script:
-    - VERSION=18.16.1
+    - VERSION=16.19.1
     - docker build -t $DOCKER_USERNAME/node-rpm:$VERSION .
     - docker images
     - docker push $DOCKER_USERNAME/node-rpm:$VERSION
